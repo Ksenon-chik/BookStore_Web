@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Книжный магазин</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Книжный магазин</h1>
+
+        {% if user.is_authenticated %}
+            <p>Вы вошли как <strong>{{ user.username }}</strong></p>
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-logout">Выйти</button>
+            </form>
+        {% else %}
+            <p><a href="{% url 'register' %}" class="btn btn-register">Регистрация</a> |
+            <a href="{% url 'login' %}" class="btn btn-login">Вход</a></p>
+        {% endif %}
+
+        <a href="{% url 'book_list' %}" class="btn btn-books">Перейти к книгам</a>
+    </div>
+</body>
+</html>
