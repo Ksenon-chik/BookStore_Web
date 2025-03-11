@@ -1,6 +1,7 @@
 from django import forms
 from .models import Book, CustomUser
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserChangeForm
 
 
 class BookForm(forms.ModelForm):
@@ -34,3 +35,11 @@ class RegisterForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class ProfileForm(UserChangeForm):
+    password = None
+
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'email', 'first_name', 'last_name')

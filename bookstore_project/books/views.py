@@ -5,6 +5,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from .forms import ProfileForm
 
 
 def index(request):
@@ -87,3 +88,15 @@ def book_delete(request, pk):
         book.delete()
         return redirect("book_list")
     return render(request, "books/book_confirm_delete.html", {"book": book})
+
+
+@login_required
+def profile_view(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = ProfileForm(instance=request.user)
+    return render(request, 'books/profile.html', {'form': form})
