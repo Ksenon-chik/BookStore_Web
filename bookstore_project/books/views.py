@@ -1,11 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Book
-from .forms import BookForm, RegisterForm
+from .models import Book, CustomUser, Profile
+from .forms import BookForm, RegisterForm, ProfileForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from .forms import ProfileForm
 
 
 def index(request):
@@ -31,6 +29,8 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            from books.models import Profile
+            Profile.objects.get_or_create(user=user)
             return redirect("index")
     else:
         form = AuthenticationForm()
@@ -92,11 +92,14 @@ def book_delete(request, pk):
 
 @login_required
 def profile_view(request):
-    if request.method == 'POST':
-        form = ProfileForm(request.POST, instance=request.user)
+    user = request.user
+
+    if request.method == "POST":
+        form = ProfileForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('profile')
+            return redirect("profile")
     else:
-        form = ProfileForm(instance=request.user)
-    return render(request, 'books/profile.html', {'form': form})
+        form = ProfileForm(instance=user)
+
+    return render(request, "books/profile.html", {"form": form, "user": user})

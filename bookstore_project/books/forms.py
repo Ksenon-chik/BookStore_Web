@@ -1,13 +1,15 @@
+from .models import Profile
 from django import forms
 from .models import Book, CustomUser
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.models import User
 
 
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ['title', 'author', 'published_date', 'isbn', 'pages', 'cover', 'language']
+        fields = ['title', 'author', 'price', 'language']
 
 
 class RegisterForm(UserCreationForm):
@@ -37,9 +39,13 @@ class RegisterForm(UserCreationForm):
         return user
 
 
-class ProfileForm(UserChangeForm):
-    password = None
-
+class ProfileForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'first_name', 'last_name')
+        fields = ["username", "email", "phone_number"]
+
+
+class ProfileExtraForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['bio']
