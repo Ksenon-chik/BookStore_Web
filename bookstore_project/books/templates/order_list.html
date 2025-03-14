@@ -1,0 +1,22 @@
+{% extends 'index.html' %}
+
+{% block title %}Мои заказы{% endblock %}
+
+{% block content %}
+    <h2>Мои заказы</h2>
+
+    {% for order in orders %}
+        <div class="order">
+            <p><strong>Дата:</strong> {{ order.created_at }}</p>
+            <p><strong>Стоимость:</strong> {{ order.total_price }} руб.</p>
+            <ul>
+                {% for item in order.items.all %}
+                    <li>{{ item.book.title }} — {{ item.quantity }} шт. ({{ item.price }} руб. за шт.)</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <hr>
+    {% empty %}
+        <p>Вы еще не делали заказов.</p>
+    {% endfor %}
+{% endblock %}

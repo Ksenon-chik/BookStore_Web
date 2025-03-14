@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Book, CustomUser, Profile, Cart
+from .models import Book, CustomUser, Profile, Cart, Order, OrderItem
 from .forms import BookForm, RegisterForm, ProfileForm
+from books.models import Cart
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -127,3 +128,29 @@ def remove_from_cart(request, cart_id):
     if cart_item.user == request.user:
         cart_item.delete()
     return redirect('cart')
+
+
+def order_list(request):
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'order_list.html', {'orders': orders})
+
+
+def checkout(request):
+    cart_items = Cart.objects.filter(user=request.user)
+    if not cart_items:
+        return redirect('cart')
+
+    total_price = sum(item.book.price * item.quantity for item in cart_items)
+
+    order = Order.objects.create(user=request.user, total_price=total_price)
+
+    for item in cart_items:
+        OrderItem.objects.create(
+            order=order,
+            book=item.book,
+            quantity=item.quantity,
+            price=item.book.price
+        )
+
+    cart_items.delete()
+    return redirect('order_list')
