@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Book, CustomUser, Profile
+from .models import Book, CustomUser, Profile, Cart
 from .forms import BookForm, RegisterForm, ProfileForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -103,3 +103,27 @@ def profile_view(request):
         form = ProfileForm(instance=user)
 
     return render(request, "books/profile.html", {"form": form, "user": user})
+
+
+def add_to_cart(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    cart_item, created = Cart.objects.get_or_create(user=request.user, book=book)
+    if not created:
+        cart_item.quantity += 1
+        cart_item.save()
+    return redirect('book_list')
+
+
+@login_required
+def cart_view(request):
+    cart_items = Cart.objects.filter(user=request.user)
+    total_price = sum(item.book.price * item.quantity for item in cart_items)
+    return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})
+
+
+@login_required
+def remove_from_cart(request, cart_id):
+    cart_item = get_object_or_404(Cart, id=cart_id)
+    if cart_item.user == request.user:
+        cart_item.delete()
+    return redirect('cart')

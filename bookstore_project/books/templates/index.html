@@ -27,7 +27,9 @@
 
         <a href="{% url 'book_list' %}" class="btn btn-books">Перейти к книгам</a>
 
-        {% block content %}{% endblock %}  <!-- Это важно! -->
+        <a href="{% url 'cart' %}" class="btn btn-cart">Корзина</a>
+
+        {% block content %}{% endblock %}
     </div>
 </body>
 </html>
