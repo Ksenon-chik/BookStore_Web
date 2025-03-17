@@ -9,6 +9,7 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+        {{ form.captcha }}
         <button type="submit">Зарегистрироваться</button>
     </form>
     <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>

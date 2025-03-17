@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 from django.contrib.auth.views import LogoutView
 from .views import (
@@ -27,5 +27,5 @@ urlpatterns = [
     path('orders/', views.order_list, name='order_list'),
     path('checkout/', views.checkout, name='checkout'),
 
-
+    path('captcha/', include('captcha.urls')),
 ]

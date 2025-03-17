@@ -21,6 +21,7 @@ def register_view(request):
             return redirect("index")
     else:
         form = RegisterForm()
+
     return render(request, "register.html", {"form": form})
 
 

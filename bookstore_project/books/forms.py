@@ -1,9 +1,8 @@
-from .models import Profile
 from django import forms
-from .models import Book, CustomUser
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import UserChangeForm
+from .models import Book, CustomUser, Profile
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
+from captcha.fields import CaptchaField
 
 
 class BookForm(forms.ModelForm):
@@ -18,11 +17,12 @@ class RegisterForm(UserCreationForm):
         ('admin', 'Администратор'),
     ]
 
+    captcha = CaptchaField()
     role = forms.ChoiceField(choices=ROLE_CHOICES, required=True, label="Роль")
 
     class Meta:
         model = CustomUser
-        fields = ("username", "email", "password1", "password2", "role")
+        fields = ("username", "email", "password1", "password2", "role", 'captcha')
 
     def save(self, commit=True):
         user = super().save(commit=False)

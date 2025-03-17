@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "books",
+    'captcha',
 ]
 
 AUTH_USER_MODEL = 'books.CustomUser'
