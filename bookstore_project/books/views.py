@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Book, CustomUser, Profile, Cart, Order, OrderItem
-from .forms import BookForm, RegisterForm, ProfileForm
+from .forms import BookForm, RegisterForm, ProfileForm, BookFilterForm
 from books.models import Cart
-from django.contrib.auth import login, logout
+from django.http import JsonResponse
+from django.contrib.auth import login, logout, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 
@@ -52,7 +53,21 @@ def is_admin(user):
 
 def book_list(request):
     books = Book.objects.all()
-    return render(request, "books/book_list.html", {"books": books})
+    form = BookFilterForm(request.GET)
+
+    if form.is_valid():
+        sort_by = form.cleaned_data.get("sort_by")
+
+        if sort_by == "title_asc":
+            books = books.order_by("title")  # Название (А-Я)
+        elif sort_by == "title_desc":
+            books = books.order_by("-title")  # Название (Я-А)
+        elif sort_by == "price_asc":
+            books = books.order_by("price")  # Цена (по возрастанию)
+        elif sort_by == "price_desc":
+            books = books.order_by("-price")  # Цена (по убыванию)
+
+    return render(request, "books/book_list.html", {"books": books, "form": form})
 
 
 @login_required
@@ -155,3 +170,12 @@ def checkout(request):
 
     cart_items.delete()
     return redirect('order_list')
+
+
+User = get_user_model()
+
+
+def check_email(request):
+    email = request.GET.get('email', '')
+    exists = User.objects.filter(email=email).exists()
+    return JsonResponse({'exists': exists})

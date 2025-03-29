@@ -49,3 +49,14 @@ class ProfileExtraForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['bio']
+
+
+class BookFilterForm(forms.Form):
+    SORT_CHOICES = [
+        ("title_asc", "Название (А-Я)"),
+        ("title_desc", "Название (Я-А)"),
+        ("price_asc", "Цена (по возрастанию)"),
+        ("price_desc", "Цена (по убыванию)"),
+    ]
+
+    sort_by = forms.ChoiceField(label="Сортировка", choices=SORT_CHOICES, required=False)

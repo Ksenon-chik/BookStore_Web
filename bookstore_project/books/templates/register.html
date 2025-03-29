@@ -1,17 +1,46 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Регистрация</title>
+  <meta charset="UTF-8">
+  <title>Регистрация</title>
 </head>
 <body>
+  <div class="container">
     <h2>Регистрация</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+    <form id="RegisterForm" method="post">
+      {% csrf_token %}
+      <div>
+        <label for="id_username">Логин:</label>
+        {{ form.username }}
+        <span id="username-feedback" class="feedback" style="color: red;"></span>
+      </div>
+      <div>
+        <label for="id_email">Email:</label>
+        {{ form.email }}
+        <span id="email-feedback" class="feedback" style="color: red;"></span>
+      </div>
+      <div>
+        <label for="id_password1">Пароль:</label>
+        {{ form.password1 }}
+        <span id="password-feedback" class="feedback" style="color: red;"></span>
+      </div>
+      <div>
+        <label for="id_password2">Подтвердите пароль:</label>
+        {{ form.password2 }}
+      </div>
+      <div>
+        <label for="id_role">Роль:</label>
+        {{ form.role }}
+      </div>
+      <div class="captcha">
         {{ form.captcha }}
-        <button type="submit">Зарегистрироваться</button>
+      </div>
+      <button type="submit">Зарегистрироваться</button>
     </form>
     <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+  </div>
+
+  <!-- Подключение JS для валидации и AJAX-проверки -->
+  <script src="{% static 'register.js' %}"></script>
 </body>
 </html>
