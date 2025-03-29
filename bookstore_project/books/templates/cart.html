@@ -3,26 +3,30 @@
 {% block title %}Корзина{% endblock %}
 
 {% block content %}
-<h2>Корзина</h2>
+<div class="cart-container">
+    <h2>Корзина</h2>
 
-{% if cart_items %}
-    <ul>
-        {% for item in cart_items %}
-            <li>
-                {{ item.book.title }} — {{ item.quantity }} шт. — {{ item.book.price }} руб.
-                <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger">Удалить</a>
-            </li>
-        {% endfor %}
-    </ul>
+    {% if cart_items %}
+        <ul class="cart-list">
+            {% for item in cart_items %}
+                <li class="cart-item">
+                    <span class="book-title">{{ item.book.title }}</span> —
+                    <span class="quantity">{{ item.quantity }} шт.</span> —
+                    <span class="price">{{ item.book.price }} руб.</span>
+                    <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger">Удалить</a>
+                </li>
+            {% endfor %}
+        </ul>
 
-    <p><strong>Общая сумма:</strong> {{ total_price }} руб.</p>
+        <p class="total-price"><strong>Общая сумма:</strong> {{ total_price }} руб.</p>
 
-    <form method="post" action="{% url 'checkout' %}">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-success">Оформить заказ</button>
-    </form>
+        <form method="post" action="{% url 'checkout' %}" class="checkout-form">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Оформить заказ</button>
+        </form>
 
-{% else %}
-    <p>Корзина пуста.</p>
-{% endif %}
+    {% else %}
+        <p class="empty-cart">Корзина пуста.</p>
+    {% endif %}
+</div>
 {% endblock %}

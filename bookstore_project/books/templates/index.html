@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Книжный магазин{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
     <div class="container">
@@ -19,14 +19,29 @@
                 <button type="submit" class="btn btn-logout">Выйти</button>
             </form>
         {% else %}
-            <p>
-                <a href="{% url 'register' %}" class="btn btn-register">Регистрация</a> |
-                <a href="{% url 'login' %}" class="btn btn-login">Вход</a>
-            </p>
+            <div class="form-container">
+                <form method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="input-box">
+                        <input type="text" class="name-input" name="username" required>
+                        <label class="name-label">Имя пользователя</label>
+                    </div>
+
+                    <div class="input-box">
+                        <input type="password" class="name-input" name="password" required>
+                        <label class="name-label">Пароль</label>
+                    </div>
+
+                    <button type="submit" class="submit-button">Войти</button>
+                </form>
+
+                <p class="register-link">
+                    Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a>
+                </p>
+            </div>
         {% endif %}
 
         <a href="{% url 'book_list' %}" class="btn btn-books">Перейти к книгам</a>
-
         <a href="{% url 'cart' %}" class="btn btn-cart">Корзина</a>
 
         {% block content %}{% endblock %}

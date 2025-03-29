@@ -3,16 +3,19 @@
 {% block title %}Личный кабинет{% endblock %}
 
 {% block content %}
-<h2>Личный кабинет</h2>
+<div class="profile-container">
+    <h2>Личный кабинет</h2>
 
-<p><strong>Имя пользователя:</strong> {{ user.username }}</p>
-<p><strong>Email:</strong> {{ user.email }}</p>
-<p><strong>Роль:</strong> {{ user.get_role_display }}</p>
+    <div class="profile-info">
+        <p><strong>Имя пользователя:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Роль:</strong> {{ user.get_role_display }}</p>
+    </div>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-</form>
-
+    <form method="post" class="profile-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-save">Сохранить изменения</button>
+    </form>
+</div>
 {% endblock %}

@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Добавить/Редактировать книгу</title>
-</head>
-<body>
-    <h1>{% if form.instance.pk %}Изменить{% else %}Добавить{% endif %} книгу</h1>
-    <form method="post">
+{% extends 'index.html' %}
+
+{% block title %}
+    {% if form.instance.pk %}Редактировать{% else %}Добавить{% endif %} книгу
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>{% if form.instance.pk %}Редактировать{% else %}Добавить{% endif %} книгу</h2>
+
+    <form method="post" class="styled-form">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Сохранить</button>
+        <button type="submit" class="btn btn-submit">Сохранить</button>
     </form>
-    <a href="{% url 'book_list' %}">Назад</a>
-</body>
-</html>
+
+    <a href="{% url 'book_list' %}" class="btn btn-back">Назад</a>
+</div>
+{% endblock %}

@@ -1,22 +1,23 @@
+{% extends 'index.html' %}
+
 {% block title %}Список книг{% endblock %}
 
 {% block content %}
+<div class="book-list-container">
     <h2>Список книг</h2>
 
-    <form method="GET">
+    <form method="GET" class="filter-form">
         {{ form.as_p }}
-        <button type="submit">Применить</button>
+        <button type="submit" class="btn btn-filter">Применить</button>
     </form>
 
-    <table class="table table-striped">
+    <table class="styled-table">
         <thead>
             <tr>
                 <th>Название</th>
                 <th>Автор</th>
                 <th>Цена</th>
-                {% if user.is_staff %}
-                    <th>Действия</th>
-                {% endif %}
+                <th>Действия</th>
             </tr>
         </thead>
         <tbody>
@@ -24,18 +25,27 @@
                 <tr>
                     <td>{{ book.title }}</td>
                     <td>{{ book.author }}</td>
-                    <td>{{ book.price }}</td>
-                    {% if user.is_staff %}
-                        <td>
-                            <a href="{% url 'book_update' book.pk %}" class="btn btn-warning btn-sm">Редактировать</a>
-                            <form method="post" action="{% url 'book_delete' book.pk %}" style="display:inline;">
+                    <td>{{ book.price }} руб.</td>
+                    <td class="actions">
+                        <form method="post" action="{% url 'add_to_cart' book.pk %}" class="add-to-cart-form">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-add-to-cart"> Добавить</button>
+                        </form>
+                        {% if user.is_staff %}
+                            <a href="{% url 'book_update' book.pk %}" class="btn btn-edit">✏</a>
+                            <form method="post" action="{% url 'book_delete' book.pk %}" class="delete-form">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                                <button type="submit" class="btn btn-delete">🗑</button>
                             </form>
-                        </td>
-                    {% endif %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">Книги не найдены.</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+</div>
 {% endblock %}
