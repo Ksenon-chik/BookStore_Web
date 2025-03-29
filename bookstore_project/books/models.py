@@ -73,7 +73,7 @@ class Order(models.Model):
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
-        return f"Заказ {self.id} от {self.user.username} на {self.total_price} руб."
+        return f"Заказ {self.id} от {self.user.username} на {self.total_price} Руб."
 
 
 class OrderItem(models.Model):
