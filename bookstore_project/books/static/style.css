@@ -1,292 +1,122 @@
+/* Подключение шрифтов */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
 /* Общие стили */
-body {
-    background: #8A2BE2;
-    font-family: 'Poppins', sans-serif;
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
 }
 
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: #07575B; /* Темно-бирюзовый */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Фон с точками */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.15) 2px, transparent 2px);
+    background-size: 20px 20px;
+    opacity: 0.8;
+}
+
+/* Основной контейнер */
 .container {
-    background: #E6E6FA;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 600px;
+    background: #E6F9F9; /* Светло-бирюзовый */
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    position: relative;
+    overflow: hidden;
+    width: 400px;
+    max-width: 100%;
+    padding: 30px;
     text-align: center;
 }
 
 /* Заголовки */
 h1, h2 {
-    color: #333;
-    margin-bottom: 20px;
-}
-
-/* Стили кнопок */
-.btn {
-    padding: 12px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.btn-books, .btn-cart, .btn-register, .btn-login, .btn-profile {
-    background: #8A2BE2;
-    color: #fff;
-}
-
-.btn-books:hover, .btn-cart:hover, .btn-register:hover, .btn-login:hover, .btn-profile:hover {
-    background: #6A1B9A;
-}
-
-.btn-danger {
-    background: #ff4d4d;
-    color: #fff;
-}
-
-.btn-danger:hover {
-    background: #cc0000;
-}
-
-.btn-save, .btn-success {
-    background: #28a745;
-    color: white;
-}
-
-.btn-save:hover, .btn-success:hover {
-    background: #218838;
-}
-
-.btn-add-to-cart {
-    background: #ff9800;
-    color: white;
-}
-
-.btn-add-to-cart:hover {
-    background: #e68900;
-}
-
-.btn-edit {
-    background: #4CAF50;
-    color: white;
-}
-
-.btn-edit:hover {
-    background: #45a049;
-}
-
-.btn-delete {
-    background: #ff4d4d;
-    color: white;
-}
-
-.btn-delete:hover {
-    background: #cc0000;
-}
-
-/* Стилизация полей ввода */
-.input-box {
-    position: relative;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.name-input {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #00008B;
-    border-radius: 4px;
-    font-size: 14px;
-    background: transparent;
-    color: #fff;
-}
-
-.name-label {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 14px;
-    pointer-events: none;
-    transition: 0.3s ease-in-out;
-}
-
-.name-input:focus ~ .name-label,
-.name-input:valid ~ .name-label {
-    transform: translateY(-20px);
-    font-size: 12px;
-    color: #8A2BE2;
-}
-
-/* Корзина */
-.cart-container {
-    background: #E6E6FA;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    text-align: center;
-}
-
-.cart-list {
-    list-style: none;
-    padding: 0;
-}
-
-.cart-item {
-    background: #fff;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.book-title {
     font-weight: bold;
-    color: #333;
+    color: #033649;
 }
 
-.quantity, .price {
-    color: #666;
+/* Поля ввода */
+input {
+    background: #eee;
+    border: none;
+    padding: 12px 15px;
+    margin: 10px 0;
+    width: 100%;
+    border-radius: 5px;
 }
 
-.total-price {
-    font-size: 1.2rem;
-    margin-top: 15px;
-    color: #333;
+/* Кнопки */
+button {
+    border-radius: 20px;
+    border: 1px solid #5D5D5D; /* Серый */
+    background: #A9A9A9; /* Светло-серый */
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 12px 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.3s ease;
+    cursor: pointer;
 }
 
-.checkout-form {
-    margin-top: 10px;
+button:hover {
+    background: #808080; /* Темно-серый */
 }
 
-.empty-cart {
-    color: #666;
-    font-size: 1.1rem;
+button:active {
+    transform: scale(0.95);
 }
 
-/* Личный кабинет */
-.profile-container {
-    background: #E6E6FA;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 500px;
-    text-align: center;
-}
-
-.profile-info {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-.profile-info p {
-    font-size: 16px;
-    color: #333;
-}
-
-.profile-form {
+/* Форма */
+.form-container {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.profile-form input,
-.profile-form select,
-.profile-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border: 2px solid #8A2BE2;
-    border-radius: 4px;
+/* Ссылки */
+a {
+    color: #033649;
     font-size: 14px;
+    text-decoration: none;
+    margin-top: 10px;
 }
 
-/* Список книг */
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+a:hover {
+    text-decoration: underline;
 }
 
-.table th, .table td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: left;
+/* Форма входа и регистрации */
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
 }
 
-.table th {
-    background: #8A2BE2;
-    color: white;
-}
-
-.table-striped tbody tr:nth-child(odd) {
-    background: #f9f9f9;
-}
-
-.table-striped tbody tr:nth-child(even) {
-    background: #fff;
-}
-
-.table-striped tbody tr:hover {
-    background: #ddd;
-}
-
-/* Анимация точек */
-body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
-    background-size: 20px 20px;
-    pointer-events: none;
-}
-
-/* Контейнер списка книг */
-.book-list-container {
-    background: #E6E6FA;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-/* Стилизация таблицы */
-.styled-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.styled-table th, .styled-table td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-}
-
-.styled-table th {
-    background: #8A2BE2;
-    color: white;
-    font-weight: bold;
-}
-
-.styled-table tr:nth-child(even) {
-    background: #f3f3f3;
-}
-
-/* Стили формы удаления */
-.delete-form {
-    display: inline;
+/* Сообщения об ошибках */
+.error-message {
+    color: #ff4d4d;
+    font-size: 14px;
+    margin-top: 5px;
 }
