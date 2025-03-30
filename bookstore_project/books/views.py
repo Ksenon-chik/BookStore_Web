@@ -122,6 +122,7 @@ def profile_view(request):
     return render(request, "books/profile.html", {"form": form, "user": user})
 
 
+@login_required
 def add_to_cart(request, book_id):
     book = get_object_or_404(Book, id=book_id)
     cart_item, created = Cart.objects.get_or_create(user=request.user, book=book)

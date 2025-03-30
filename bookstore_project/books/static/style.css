@@ -4,13 +4,15 @@
 /* Общие стили */
 * {
     box-sizing: border-box;
-    margin: 0;
+    margin: 10;
     padding: 0;
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background: #07575B; /* Темно-бирюзовый */
+    background: linear-gradient(135deg, #1e202c, #60519b, #199797);
+    background-size: 300% 300%;
+    animation: gradientAnimation 8s ease infinite;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,56 +23,54 @@ body {
 }
 
 /* Фон с точками */
-body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.15) 2px, transparent 2px);
-    background-size: 20px 20px;
-    opacity: 0.8;
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: url('/static/CzeBHnjlgvo.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
 }
 
 /* Основной контейнер */
 .container {
-    background: #E6F9F9; /* Светло-бирюзовый */
-    border-radius: 10px;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-    position: relative;
-    overflow: hidden;
-    width: 400px;
-    max-width: 100%;
-    padding: 30px;
+    background: rgba(255, 255, 255, 0.005); /* Почти прозрачный */
+    backdrop-filter: blur(15px); /* Увеличенное размытие */
+    border-radius: 20px; /* Скругленные углы */
+    padding: 40px;
     text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Легкая тень */
 }
 
 /* Заголовки */
 h1, h2 {
     font-weight: bold;
-    color: #033649;
+    color: #c5ced9;
 }
 
 /* Поля ввода */
 input {
-    background: #eee;
+    background: #c5ced9;
     border: none;
-    padding: 12px 15px;
+    padding: 10px 1px;
     margin: 10px 0;
     width: 100%;
-    border-radius: 5px;
+    border-radius: 30px;
 }
 
 /* Кнопки */
 button {
     border-radius: 20px;
-    border: 1px solid #5D5D5D; /* Серый */
-    background: #A9A9A9; /* Светло-серый */
-    color: #fff;
+    border: 2px solid #c5ced9; /* Серый */
+    background: #383b42; /* Светло-серый */
+    color: #c5ced9;
     font-size: 14px;
     font-weight: bold;
-    padding: 12px 20px;
+    padding: 10px 25px;
     letter-spacing: 1px;
     text-transform: uppercase;
     transition: 0.3s ease;
@@ -78,7 +78,7 @@ button {
 }
 
 button:hover {
-    background: #808080; /* Темно-серый */
+    background: #383b42; /* Темно-серый */
 }
 
 button:active {
@@ -95,7 +95,7 @@ button:active {
 
 /* Ссылки */
 a {
-    color: #033649;
+    color: #bfc0d1;
     font-size: 14px;
     text-decoration: none;
     margin-top: 10px;
@@ -116,7 +116,7 @@ a:hover {
 
 /* Сообщения об ошибках */
 .error-message {
-    color: #ff4d4d;
+    color: #60519b;
     font-size: 14px;
     margin-top: 5px;
 }

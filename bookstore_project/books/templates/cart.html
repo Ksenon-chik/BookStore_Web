@@ -7,23 +7,30 @@
     <h2>Корзина</h2>
 
     {% if cart_items %}
-        <ul class="cart-list">
+        <div class="cart-items">
             {% for item in cart_items %}
-                <li class="cart-item">
-                    <span class="book-title">{{ item.book.title }}</span> —
-                    <span class="quantity">{{ item.quantity }} шт.</span> —
-                    <span class="price">{{ item.book.price }} руб.</span>
-                    <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger">Удалить</a>
-                </li>
+                <div class="cart-item">
+                    <img src="{{ item.book.image.url }}" alt="{{ item.book.title }}" class="book-image">
+                    <div class="item-details">
+                        <h3 class="book-title">{{ item.book.title }}</h3>
+                        <p class="quantity">Количество: {{ item.quantity }} шт.</p>
+                        <p class="price">Цена: {{ item.book.price }} руб.</p>
+                    </div>
+                    <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> <!-- Иконка удаления -->
+                    </a>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
 
-        <p class="total-price"><strong>Общая сумма:</strong> {{ total_price }} руб.</p>
+        <div class="cart-summary">
+            <p class="total-price"><strong>Общая сумма:</strong> {{ total_price }} руб.</p>
 
-        <form method="post" action="{% url 'checkout' %}" class="checkout-form">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-success">Оформить заказ</button>
-        </form>
+            <form method="post" action="{% url 'checkout' %}" class="checkout-form">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Оформить заказ</button>
+            </form>
+        </div>
 
     {% else %}
         <p class="empty-cart">Корзина пуста.</p>
