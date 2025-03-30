@@ -11,41 +11,34 @@
         <button type="submit" class="btn btn-filter">Применить</button>
     </form>
 
-    <table class="styled-table">
-        <thead>
-            <tr>
-                <th>Название</th>
-                <th>Автор</th>
-                <th>Цена</th>
-                <th>Действия</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for book in books %}
-                <tr>
-                    <td>{{ book.title }}</td>
-                    <td>{{ book.author }}</td>
-                    <td>{{ book.price }} руб.</td>
-                    <td class="actions">
-                        <form method="post" action="{% url 'add_to_cart' book.pk %}" class="add-to-cart-form">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-add-to-cart"> Добавить</button>
-                        </form>
-                        {% if user.is_staff %}
-                            <a href="{% url 'book_update' book.pk %}" class="btn btn-edit">✏</a>
-                            <form method="post" action="{% url 'book_delete' book.pk %}" class="delete-form">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-delete">🗑</button>
-                            </form>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="4">Книги не найдены.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <!-- Кнопка "Добавить книгу" (Только для админов) -->
+    {% if user.is_staff %}
+        <a href="{% url 'book_create' %}" class="btn btn-add">Добавить книгу</a>
+    {% endif %}
+
+    <div class="books-container">
+        {% for book in books %}
+            <div class="book-card">
+                <h3>{{ book.title }}</h3>
+                <p><strong>Автор:</strong> {{ book.author }}</p>
+                <p><strong>Цена:</strong> {{ book.price }} руб.</p>
+
+                <form method="post" action="{% url 'add_to_cart' book.pk %}" class="add-to-cart-form">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-add-to-cart">Добавить в корзину</button>
+                </form>
+
+                {% if user.is_staff %}
+                    <a href="{% url 'book_update' book.pk %}" class="btn btn-edit">✏ Редактировать</a>
+                    <form method="post" action="{% url 'book_delete' book.pk %}" class="delete-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-delete">🗑 Удалить</button>
+                    </form>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>Книги не найдены.</p>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
