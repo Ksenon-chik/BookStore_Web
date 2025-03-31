@@ -13,11 +13,15 @@
 
         {% if user.is_authenticated %}
             <p>Вы вошли как <strong>{{ user.username }}</strong></p>
-            <a href="{% url 'profile' %}" class="btn btn-profile">Личный кабинет</a>
-            <form method="POST" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-logout">Выйти</button>
-            </form>
+
+            <div class="button-container">
+                <a href="{% url 'profile' %}" class="btn btn-profile">Личный кабинет</a>
+
+                <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-logout">Выйти</button>
+                </form>
+            </div>
         {% else %}
             <div class="form-container">
                 <form method="POST" action="{% url 'login' %}">
@@ -41,10 +45,25 @@
             </div>
         {% endif %}
 
-        <a href="{% url 'book_list' %}" class="btn btn-books">Перейти к книгам</a>
-        <a href="{% url 'cart' %}" class="btn btn-cart">Корзина</a>
+        <div class="button-container">
+            <a href="{% url 'book_list' %}" class="btn btn-books">Перейти к книгам</a>
+            <a href="{% url 'cart' %}" class="btn btn-cart">Корзина</a>
+        </div>
 
         {% block content %}{% endblock %}
     </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (localStorage.getItem("scrollPosition")) {
+            window.scrollTo(0, localStorage.getItem("scrollPosition"));
+        }
+
+        document.querySelectorAll(".add-to-cart-form").forEach(form => {
+            form.addEventListener("submit", function () {
+                localStorage.setItem("scrollPosition", window.scrollY);
+            });
+        });
+    });
+</script>
 </body>
 </html>

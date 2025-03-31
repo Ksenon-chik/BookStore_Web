@@ -6,14 +6,13 @@
 
 {% block content %}
 <div class="form-container">
-    <h2>{% if form.instance.pk %}Редактировать{% else %}Добавить{% endif %} книгу</h2>
-
-    <form method="post" class="styled-form">
+    <form method="post" action="{% if form.instance.pk %}{% url 'book_update' form.instance.pk %}{% else %}{% url 'book_create' %}{% endif %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-submit">Сохранить</button>
+        <div class="button-group">
+            <button type="submit" class="btn btn-submit">Сохранить</button>
+            <a href="{% url 'book_list' %}" class="btn btn-back">Назад</a>
+        </div>
     </form>
-
-    <a href="{% url 'book_list' %}" class="btn btn-back">Назад</a>
 </div>
 {% endblock %}

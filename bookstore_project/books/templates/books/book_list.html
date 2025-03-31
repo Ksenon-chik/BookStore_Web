@@ -23,18 +23,20 @@
                 <p><strong>Автор:</strong> {{ book.author }}</p>
                 <p><strong>Цена:</strong> {{ book.price }} руб.</p>
 
-                <form method="post" action="{% url 'add_to_cart' book.pk %}" class="add-to-cart-form">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-add-to-cart">Добавить в корзину</button>
-                </form>
-
-                {% if user.is_staff %}
-                    <a href="{% url 'book_update' book.pk %}" class="btn btn-edit">✏ Редактировать</a>
-                    <form method="post" action="{% url 'book_delete' book.pk %}" class="delete-form">
+                <!-- Группа кнопок, расположенных в одном ряду -->
+                <div class="button-group" style="display: flex; justify-content: center; gap: 10px;">
+                    <form method="post" action="{% url 'add_to_cart' book.pk %}" class="add-to-cart-form">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-delete">🗑 Удалить</button>
+                        <button type="submit" class="btn btn-add-to-cart">Добавить в корзину</button>
                     </form>
-                {% endif %}
+                    {% if user.is_staff %}
+                        <a href="{% url 'book_update' book.pk %}" class="btn btn-edit">Редактировать</a>
+                        <form method="post" action="{% url 'book_delete' book.pk %}" class="delete-form">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-delete">Удалить</button>
+                        </form>
+                    {% endif %}
+                </div>
             </div>
         {% empty %}
             <p>Книги не найдены.</p>

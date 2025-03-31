@@ -4,110 +4,132 @@
 /* Общие стили */
 * {
     box-sizing: border-box;
-    margin: 10;
+    margin: 0;
     padding: 0;
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background: url('/static/CzeBHnjlgvo.jpg') no-repeat center center fixed;
+    background: url('/static/m.jpg') no-repeat center center fixed;
     background-size: cover;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
+    min-height: 100vh; /* Разрешаем контенту увеличивать высоту */
+    overflow-y: auto; /* Включаем прокрутку */
+    padding-bottom: 20px; /* Чтоб контент не прилипал к нижнему краю */
 }
 
 /* Основной контейнер */
-.container {
-    background: rgba(255, 255, 255, 0.005); /* Почти прозрачный */
-    backdrop-filter: blur(15px); /* Увеличенное размытие */
-    border-radius: 20px; /* Скругленные углы */
+.container, .login-container {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
     padding: 40px;
     text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Легкая тень */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    max-width: 90%; /* Чтобы не сжимался на узких экранах */
+    width: 600px; /* Фиксированная ширина для удобства */
+    margin: 30px auto; /* Добавляем отступы сверху и снизу */
 }
 
-.books-container {
+/* Контейнер для кнопок */
+.button-container {
     display: flex;
-    flex-wrap: wrap; /* Перенос элементов на новую строку */
-    gap: 20px; /* Расстояние между карточками */
-    justify-content: center; /* Выравнивание по центру */
-    margin-top: 20px;
+    flex-wrap: wrap; /* Позволяет кнопкам переноситься */
+    justify-content: center;
+    gap: 15px; /* Отступы между кнопками */
+    max-width: 400px;
+    margin: 30px auto;
 }
 
-.book-card {
-    background: rgba(255, 255, 255, 0.2);
+/* Кнопки */
+button, .btn {
+    border-radius: 5px;
+    border: 2px solid #c5ced9;
+    background: #383b42;
+    color: #c5ced9;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 10px 20px;
+    letter-spacing: 1px;
+    transition: 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    flex: 1 1 2%; /* Кнопки размещаются по две в ряд */
+    min-width: 120px;
+}
+
+button:hover, .btn:hover {
+    background: #50535c;
+}
+
+button:active, .btn:active {
+    transform: scale(0.95);
+}
+
+/* Стили для выпадающего списка */
+select {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #c5ced9;
+    padding: 10px;
+    margin: 10px 0;
+    width: 100%;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    transition: 0.3s;
+}
+
+/* Стили при наведении */
+select:hover {
+    border-color: #fff;
+}
+
+/* Стили при фокусе */
+select:focus {
+    border-color: #bfc0d1;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+/* Стилизация выпадающих опций */
+option {
+    background: #383b42;
+    color: #fff;
+    font-size: 14px;
+}
+
+/* Контейнер для сортировки */
+.filter-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     padding: 20px;
     border-radius: 10px;
-    width: 250px;
-    text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s ease-in-out;
-}
-
-.book-card:hover {
-    transform: scale(1.05); /* Немного увеличивает карточку при наведении */
-}
-
-.book-card h3 {
-    margin-bottom: 10px;
-}
-
-.book-card p {
-    margin: 5px 0;
-}
-
-.add-to-cart-form {
-    margin-top: 10px;
-}
-
-/* Заголовки */
-h1, h2 {
-    font-weight: bold;
-    color: #c5ced9;
+    max-width: 400px;
+    margin: 20px auto;
 }
 
 /* Поля ввода */
 input {
     background: #c5ced9;
     border: none;
-    padding: 10px 1px;
+    padding: 10px;
     margin: 10px 0;
     width: 100%;
-    border-radius: 30px;
-}
-
-/* Кнопки */
-button {
-    border-radius: 20px;
-    border: 2px solid #c5ced9; /* Серый */
-    background: #383b42; /* Светло-серый */
-    color: #c5ced9;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 10px 25px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: 0.3s ease;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #383b42; /* Темно-серый */
-}
-
-button:active {
-    transform: scale(0.95);
+    border-radius: 5px;
 }
 
 /* Форма */
-.form-container {
-    width: 100%;
+.form-container, .login-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -118,11 +140,6 @@ a {
     color: #bfc0d1;
     font-size: 14px;
     text-decoration: none;
-    margin-top: 10px;
-}
-
-a:hover {
-    text-decoration: underline;
 }
 
 /* Форма входа и регистрации */
@@ -136,7 +153,7 @@ a:hover {
 
 /* Сообщения об ошибках */
 .error-message {
-    color: #60519b;
+    color: #ff6b6b;
     font-size: 14px;
     margin-top: 5px;
 }
