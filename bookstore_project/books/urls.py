@@ -28,5 +28,7 @@ urlpatterns = [
     path('checkout/', views.checkout, name='checkout'),
 
     path('captcha/', include('captcha.urls')),
+
+    path("ajax/check_username/", views.check_username, name='check_username'),
     path('ajax/check_email/', views.check_email, name='check_email'),
 ]

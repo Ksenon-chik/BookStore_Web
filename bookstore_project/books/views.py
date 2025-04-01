@@ -176,6 +176,12 @@ def checkout(request):
 User = get_user_model()
 
 
+def check_username(request):
+    username = request.GET.get("username", "")
+    exists = User.objects.filter(username=username).exists()
+    return JsonResponse({"exists": exists})
+
+
 def check_email(request):
     email = request.GET.get('email', '')
     exists = User.objects.filter(email=email).exists()
