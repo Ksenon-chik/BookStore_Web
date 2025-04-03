@@ -9,17 +9,21 @@
     {% if orders %}
         {% for order in orders %}
             <div class="order-card">
-                <p><strong>Дата:</strong> {{ order.created_at|date:"d.m.Y H:i" }}</p>
-                <p><strong>Стоимость:</strong> {{ order.total_price }} руб.</p>
-                <ul class="order-items">
-                    {% for item in order.items.all %}
-                        <li>
-                            <span class="book-title">{{ item.book.title }}</span> —
-                            <span class="quantity">{{ item.quantity }} шт.</span>
-                            (<span class="price">{{ item.price }} руб./шт.</span>)
-                        </li>
-                    {% endfor %}
-                </ul>
+                <p class="order-date"><strong>Дата:</strong> {{ order.created_at|date:"d.m.Y H:i" }}</p>
+                <p class="order-total"><strong>Стоимость:</strong> {{ order.total_price }} руб.</p>
+
+                <div class="order-items">
+                    <h4>Товары в заказе:</h4>
+                    <ul>
+                        {% for item in order.items.all %}
+                            <li class="order-item">
+                                <span class="book-title">{{ item.book.title }}</span> —
+                                <span class="quantity">{{ item.quantity }} шт.</span>
+                                (<span class="price">{{ item.price }} руб./шт.</span>)
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         {% endfor %}
     {% else %}

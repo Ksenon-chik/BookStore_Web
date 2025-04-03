@@ -8,62 +8,48 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
+
+    <!-- Основной контейнер -->
     <div class="container">
         <h1>Книжный магазин</h1>
-
-        {% if user.is_authenticated %}
-            <p>Вы вошли как <strong>{{ user.username }}</strong></p>
-
-            <div class="button-container">
-                <a href="{% url 'profile' %}" class="btn btn-profile">Личный кабинет</a>
-
-                <form method="POST" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-logout">Выйти</button>
-                </form>
-            </div>
-        {% else %}
-            <div class="form-container">
-                <form method="POST" action="{% url 'login' %}">
-                    {% csrf_token %}
-                    <div class="input-box">
-                        <input type="text" class="name-input" name="username" required>
-                        <label class="name-label">Имя пользователя</label>
-                    </div>
-
-                    <div class="input-box">
-                        <input type="password" class="name-input" name="password" required>
-                        <label class="name-label">Пароль</label>
-                    </div>
-
-                    <button type="submit" class="submit-button">Войти</button>
-                </form>
-
-                <p class="register-link">
-                    Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a>
-                </p>
-            </div>
-        {% endif %}
-
-        <div class="button-container">
-            <a href="{% url 'book_list' %}" class="btn btn-books">Перейти к книгам</a>
-            <a href="{% url 'cart' %}" class="btn btn-cart">Корзина</a>
-        </div>
-
         {% block content %}{% endblock %}
     </div>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        if (localStorage.getItem("scrollPosition")) {
-            window.scrollTo(0, localStorage.getItem("scrollPosition"));
-        }
 
-        document.querySelectorAll(".add-to-cart-form").forEach(form => {
-            form.addEventListener("submit", function () {
-                localStorage.setItem("scrollPosition", window.scrollY);
-            });
-        });
-    });
-</script>
+    <!-- Сайдбар -->
+    <div class="sidebar">
+        {% if user.is_authenticated %}
+            <p class="sidebar-user">Вы вошли как <strong>{{ user.username }}</strong></p>
+        {% endif %}
+
+        <a href="{% url 'profile' %}" class="btn btn-profile">Личный кабинет</a>
+        <a href="{% url 'cart' %}" class="btn btn-cart">Корзина</a>
+        <a href="{% url 'book_list' %}" class="btn btn-books">Книги</a>
+
+        {% if user.is_authenticated %}
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-logout">Выйти</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn btn-login">Войти</a>
+            <a href="{% url 'register' %}" class="btn btn-register">Зарегистрироваться</a>
+        {% endif %}
+    </div>
+
+    <!-- Скрипт для сохранения позиции скролла -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          if (localStorage.getItem("scrollPosition")) {
+              window.scrollTo(0, localStorage.getItem("scrollPosition"));
+          }
+
+          document.querySelectorAll(".add-to-cart-form").forEach(form => {
+              form.addEventListener("submit", function () {
+                  localStorage.setItem("scrollPosition", window.scrollY);
+              });
+          });
+      });
+    </script>
+
 </body>
 </html>

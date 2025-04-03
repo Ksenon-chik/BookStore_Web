@@ -9,15 +9,17 @@
     {% if cart_items %}
         <div class="cart-items">
             {% for item in cart_items %}
-                <div class="cart-item">
-                    <div class="item-details">
-                        <h3 class="book-title">{{ item.book.title }}</h3>
-                        <p class="quantity">Количество: {{ item.quantity }} шт.</p>
-                        <p class="price">Цена: {{ item.book.price }} руб.</p>
+                <div class="cart-card">
+                    <h3 class="book-title">{{ item.book.title }}</h3>
+                    <p class="author"><strong>Автор:</strong> {{ item.book.author }}</p>
+                    <p class="quantity"><strong>Количество:</strong> {{ item.quantity }} шт.</p>
+                    <p class="price"><strong>Цена за шт:</strong> {{ item.book.price }} руб.</p>
+
+                    <div class="cart-buttons">
+                        <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Удалить
+                        </a>
                     </div>
-                    <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger">
-                        <i class="fas fa-trash"></i> Удалить
-                    </a>
                 </div>
             {% endfor %}
         </div>

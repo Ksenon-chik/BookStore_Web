@@ -6,6 +6,7 @@
 <div class="book-list-container">
     <h2>Список книг</h2>
 
+    <!-- Форма фильтрации -->
     <form method="GET" class="filter-form">
         {{ form.as_p }}
         <button type="submit" class="btn btn-filter">Применить</button>
@@ -16,19 +17,21 @@
         <a href="{% url 'book_create' %}" class="btn btn-add">Добавить книгу</a>
     {% endif %}
 
-    <div class="books-container">
+    <!-- Карточки книг -->
+    <div class="book-grid">
         {% for book in books %}
             <div class="book-card">
-                <h3>{{ book.title }}</h3>
-                <p><strong>Автор:</strong> {{ book.author }}</p>
-                <p><strong>Цена:</strong> {{ book.price }} руб.</p>
+                <h3 class="book-title">{{ book.title }}</h3>
+                <p class="book-author"><strong>Автор:</strong> {{ book.author }}</p>
+                <p class="book-price"><strong>Цена:</strong> {{ book.price }} руб.</p>
 
-                <!-- Группа кнопок, расположенных в одном ряду -->
-                <div class="button-group" style="display: flex; justify-content: center; gap: 10px;">
+                <!-- Группа кнопок -->
+                <div class="button-group">
                     <form method="post" action="{% url 'add_to_cart' book.pk %}" class="add-to-cart-form">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-add-to-cart">Добавить в корзину</button>
+                        <button type="submit" class="btn btn-add-to-cart">В корзину</button>
                     </form>
+
                     {% if user.is_staff %}
                         <a href="{% url 'book_update' book.pk %}" class="btn btn-edit">Редактировать</a>
                         <form method="post" action="{% url 'book_delete' book.pk %}" class="delete-form">
