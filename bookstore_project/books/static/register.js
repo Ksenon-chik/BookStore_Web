@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const usernameInput = document.getElementById('id_username');
+    const usernameInput = document.getElementById('id_username');  // ссылки на элементы формы
     const emailInput = document.getElementById('id_email');
     const passwordInput = document.getElementById('id_password1');
 
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             usernameFeedback.textContent = "Проверка логина...";
 
-            // Отправляем AJAX-запрос на сервер
+            // Отправляем AJAX-запрос на сервер для проверки уникальности логина
             fetch(`/books/ajax/check_username/?username=${encodeURIComponent(username)}`)
                 .then(response => response.json())
                 .then(data => {
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (emailInput) {
         emailInput.addEventListener('keyup', function() {
             const email = emailInput.value.trim();
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailRegex = /^[a-zA-Z0-9!#$%&*+\-\/=?^_`{|}~.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
             if (!emailRegex.test(email)) {
                 emailFeedback.textContent = "Введите корректный email.";
